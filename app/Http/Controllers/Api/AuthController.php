@@ -33,4 +33,37 @@ class AuthController extends Controller
         'user' => $user,
        ], 201);
     } 
+
+
+    public function login(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string|min:6',
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'message' => 'Invalid credentials!',
+        ], 401);
+    }
+
+    if (!$user->hasVerifiedEmail()) {
+        return response()->json([
+            'message' => 'Email not verified!',
+        ], 401);
+    }
+
+    $token = $user->createToken('auth-token')->plainTextToken;
+
+    return response()->json([
+        'message' => 'User logged in successfully',
+        'user' => $user,
+        'token' => $token,
+        'token_type' => 'Bearer',
+    ], 200);
+}
+
 }
