@@ -17,7 +17,7 @@ class HeroesTable
     {
         return $table
             ->columns([
-                ImageColumn::make('image')->label('Hero Image'),
+                ImageColumn::make('image')->disk('public')->label('Hero Image'),
                 IconColumn::make('is_active')->boolean()->label('Aktif'),
                 TextColumn::make('created_at')->dateTime()->label('dibuat'),
             ]);

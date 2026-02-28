@@ -14,6 +14,7 @@ class HeroForm
                 FileUpload::make('image')
                 ->label('Hero Image')
                 ->image()
+                ->disk('public')
                 ->directory('heroes')
                 ->required(),
                 Toggle::make('is_active')
