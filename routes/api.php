@@ -4,10 +4,14 @@ use App\Http\Controllers\Api\AuthController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use App\Models\Hero;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/heroes', function() {
+    return Hero::where('is_active', true)->get();
+});
 
 
 
